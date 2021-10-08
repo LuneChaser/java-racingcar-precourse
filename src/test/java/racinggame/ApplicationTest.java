@@ -2,7 +2,8 @@ package racinggame;
 
 import nextstep.test.NSTest;
 import nextstep.utils.Randoms;
-import racinggame.domain.constants.RacingConstants;
+import racinggame.constants.RacingConstants;
+import racinggame.domain.car.RacingCarList;
 import racinggame.domain.strategy.CarMoveBehavior;
 import racinggame.domain.strategy.CarMoveForwardBehavior;
 import racinggame.domain.strategy.CarMoveStopBehavior;
@@ -71,8 +72,18 @@ public class ApplicationTest extends NSTest {
 		}
 
 		@Test
-		@DisplayName("생성오류-자동차 0개만 생성")
-		void 생성오류_생성_0개() {
+		@DisplayName("생성오류-1개 생성시 자동차 이름 미입력")
+		void 생성오류_1개생성_이름미입력() {
+		}
+
+		@Test
+		@DisplayName("생성오류-다수 생성시 이름없는 항목존재")
+		void 생성오류_다수생성_이름미입력() {
+		}
+
+		@Test
+		@DisplayName("생성오류 발생시 이전에 생성된 항목의 유지여부 확인")
+		void 생성오류_이전생성된항목유지() {
 		}
 
 		@Test
