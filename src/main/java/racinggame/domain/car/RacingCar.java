@@ -17,4 +17,12 @@ public class RacingCar {
 	public Integer getMoveDistance() {
 		return this.totalMoveCount;
 	}
+
+	public String getName() {
+		return carName;
+	}
+
+	public Integer getTotalMoveCount() {
+		return totalMoveCount;
+	}
 }

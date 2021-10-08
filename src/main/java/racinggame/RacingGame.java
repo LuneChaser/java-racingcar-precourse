@@ -14,7 +14,11 @@ public class RacingGame {
 	public void run() {
 		racingCars = getRacingCars();
 
-		racingCars.allMove(getRacingCount());
+		Integer racingCount = getRacingCount();
+
+		for (Integer index = 0; index < racingCount; index++) {
+			racingCars.allMove();
+		}
 
 		printRacingResult(racingCars);
 
@@ -65,7 +69,7 @@ public class RacingGame {
 		System.out.println("실행 결과");
 
 		for (Integer carIndex = 0; carIndex < cars.size(); carIndex++) {
-			System.out.println(cars.getCarName(carIndex) + " : " + printCarDistance(cars.getCarMoveDistance(carIndex)));
+			System.out.println(cars.getName(carIndex) + " : " + printCarDistance(cars.getCarMoveDistance(carIndex)));
 		}
 	}
 

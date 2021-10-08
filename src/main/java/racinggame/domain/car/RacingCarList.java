@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import nextstep.utils.Randoms;
 import racinggame.constants.RacingConstants;
-import racinggame.domain.strategy.CarMoveBehavior;
-import racinggame.domain.strategy.CarMoveForwardBehavior;
-import racinggame.domain.strategy.CarMoveStopBehavior;
+import racinggame.domain.strategy.CarMoveBehaviorFactory;
 
 public class RacingCarList {
 	ArrayList<RacingCar> cars;
@@ -19,7 +17,7 @@ public class RacingCarList {
 		ArrayList<RacingCar> tempCars = new ArrayList<RacingCar>();
 
 		for (String carName : carNames.split(RacingConstants.CAR_NAME_SEPERATOR)) {
-			if (isInvalidGenerate(carName.trim())) {
+			if (isInvalidCarName(carName.trim())) {
 				return false;
 			}
 
@@ -31,36 +29,23 @@ public class RacingCarList {
 		return true;
 	}
 
-	private boolean isInvalidGenerate(String carName) {
-		if (carName.length() > RacingConstants.CAR_NAME_LIMIT || carName.length() < 1) {
-			return true;
-		}
-
-		return false;
+	private boolean isInvalidCarName(String carName) {
+		return carName.length() > RacingConstants.CAR_NAME_LIMIT || carName.length() < 1;
 	}
 
 	public Integer size() {
 		return cars.size();
 	}
 
-	public String getCarName(int carIndex) {
+	public String getName(int carIndex) {
 		return cars.get(carIndex).carName;
 	}
 
-	public void allMove(Integer racingCount) {
-		for (Integer index = 0; index < racingCount; index++) {
-			for (RacingCar car : cars) {
-				int randomNumber = Randoms.pickNumberInRange(0, 9);
-				CarMoveBehavior moveBehavior = new CarMoveStopBehavior();
+	public void allMove() {
+		for (RacingCar car : cars) {
+			Integer moveBehaviorNumber = Randoms.pickNumberInRange(CarMoveBehaviorFactory.CAR_MOVE_BEHAVIOR_MIN, CarMoveBehaviorFactory.CAR_MOVE_BEHAVIOR_MAX);
 
-				if (randomNumber >= 0 && randomNumber <= 3) {
-					moveBehavior = new CarMoveStopBehavior();
-				} else if (randomNumber >= 4 && randomNumber <= 9) {
-					moveBehavior = new CarMoveForwardBehavior();
-				}
-
-				car.move(moveBehavior);
-			}
+			car.move(CarMoveBehaviorFactory.createBehavior(moveBehaviorNumber));
 		}
 	}
 
@@ -72,7 +57,7 @@ public class RacingCarList {
 		ArrayList<String> carNames = new ArrayList<String>();
 
 		for (Integer index = 0; index < cars.size(); index++) {
-			carNames.add(getCarName(index));
+			carNames.add(getName(index));
 		}
 
 		return String.join(RacingConstants.CAR_NAME_SEPERATOR, carNames);
@@ -82,8 +67,8 @@ public class RacingCarList {
 		RacingCarList tempRacingCars = new RacingCarList();
 
 		for (RacingCar car : this.cars) {
-			if (car.totalMoveCount == moveDistance) {
-				tempRacingCars.add(car.carName);
+			if (car.getMoveDistance() == moveDistance) {
+				tempRacingCars.add(car.getName());
 			}
 		}
 

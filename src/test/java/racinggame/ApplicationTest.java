@@ -129,15 +129,15 @@ public class ApplicationTest extends NSTest {
 			
 			cars.add("TestName");
 			assertEquals(1, cars.size());
-			assertEquals("test", cars.getCarName(0));
+			assertEquals("test", cars.getName(0));
 
 			cars.add("");
 			assertEquals(1, cars.size());
-			assertEquals("test", cars.getCarName(0));
+			assertEquals("test", cars.getName(0));
 
 			cars.add(",chaser");
 			assertEquals(1, cars.size());
-			assertEquals("test", cars.getCarName(0));
+			assertEquals("test", cars.getName(0));
 		}
 
 		@Test
@@ -148,7 +148,7 @@ public class ApplicationTest extends NSTest {
 			cars.add("test");
 
 			assertEquals(1, cars.size());
-			assertEquals("test", cars.getCarName(0));
+			assertEquals("test", cars.getName(0));
 		}
 
 		@Test
@@ -159,8 +159,8 @@ public class ApplicationTest extends NSTest {
 			cars.add("test,pobi");
 			
 			assertEquals(2, cars.size());
-			assertEquals("test", cars.getCarName(0));
-			assertEquals("pobi", cars.getCarName(1));
+			assertEquals("test", cars.getName(0));
+			assertEquals("pobi", cars.getName(1));
 		}
 
 		@Test
@@ -173,7 +173,7 @@ public class ApplicationTest extends NSTest {
 				
 				cars.add("test");
 
-				cars.allMove(1);
+				cars.allMove();
 
 				assertEquals(0, cars.getCarMoveDistance(0));
 			}
@@ -189,7 +189,7 @@ public class ApplicationTest extends NSTest {
 				
 				cars.add("test");
 
-				cars.allMove(1);
+				cars.allMove();
 
 				assertEquals(1, cars.getCarMoveDistance(0));
 			}
@@ -205,7 +205,8 @@ public class ApplicationTest extends NSTest {
 				
 				cars.add("test");
 
-				cars.allMove(2);
+				cars.allMove();
+				cars.allMove();
 
 				assertEquals(0, cars.getCarMoveDistance(0));
 			}
@@ -221,7 +222,8 @@ public class ApplicationTest extends NSTest {
 				
 				cars.add("test");
 
-				cars.allMove(2);
+				cars.allMove();
+				cars.allMove();
 
 				assertEquals(2, cars.getCarMoveDistance(0));
 			}
@@ -237,7 +239,9 @@ public class ApplicationTest extends NSTest {
 				
 				cars.add("test");
 
-				cars.allMove(3);
+				cars.allMove();
+				cars.allMove();
+				cars.allMove();
 
 				assertEquals(2, cars.getCarMoveDistance(0));
 			}
