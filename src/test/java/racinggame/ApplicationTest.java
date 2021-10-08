@@ -53,6 +53,11 @@ public class ApplicationTest extends NSTest {
 		@DisplayName("유일한 우승자가 존재")
 		void 다수의자동차_우승자_1명() {
 			try (final MockedStatic<Randoms> mockRandoms = mockStatic(Randoms.class)) {
+				mockRandoms.when(()-> Randoms.pickNumberInRange(anyInt(), anyInt()))
+											.thenReturn(1, 5)
+											.thenReturn(6, 7);
+				run("t1,t2", "2");
+				verify("최종 우승자는 t2 입니다.");
 			}
 		}
 
@@ -60,6 +65,13 @@ public class ApplicationTest extends NSTest {
 		@DisplayName("다수의 우승자가 존재")
 		void 다수의자동차_우승자_2명() {
 			try (final MockedStatic<Randoms> mockRandoms = mockStatic(Randoms.class)) {
+				mockRandoms.when(()-> Randoms.pickNumberInRange(anyInt(), anyInt()))
+											.thenReturn(1, 2, 5)
+											.thenReturn(5, 1, 7)
+											.thenReturn(7, 4, 1);
+;
+				run("t1,t2,t3", "3");
+				verify("최종 우승자는 t1,t3 입니다.");
 			}
 		}
 	}
@@ -126,7 +138,7 @@ public class ApplicationTest extends NSTest {
 		@DisplayName("자동차 2개만 생성")
 		void 생성_2개() {
 			RacingCarList cars = new RacingCarList();
-			
+
 			cars.add("test,pobi");
 			
 			assertEquals(2, cars.size());
