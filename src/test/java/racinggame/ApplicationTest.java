@@ -5,15 +5,11 @@ import nextstep.utils.Randoms;
 import racinggame.constants.RacingConstants;
 import racinggame.domain.car.RacingCarList;
 import racinggame.domain.strategy.CarMoveBehavior;
-import racinggame.domain.strategy.CarMoveForwardBehavior;
-import racinggame.domain.strategy.CarMoveStopBehavior;
+import racinggame.domain.strategy.CarMoveBehaviorFactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mockStatic;
-
-import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -254,7 +250,7 @@ public class ApplicationTest extends NSTest {
 		@Test
 		@DisplayName("앞으로 움직임")
 		void 전진() {
-			CarMoveBehavior carMoveBehavior = new CarMoveForwardBehavior();
+			CarMoveBehavior carMoveBehavior = CarMoveBehaviorFactory.createBehavior(6);
 
 			assertEquals(RacingConstants.MOVE_UNIT_FORWARD, carMoveBehavior.getMoveDistance());  
 		}
@@ -262,7 +258,7 @@ public class ApplicationTest extends NSTest {
 		@Test
 		@DisplayName("움직이지 않음")
 		void 정지() {
-			CarMoveBehavior carMoveBehavior = new CarMoveStopBehavior();
+			CarMoveBehavior carMoveBehavior = CarMoveBehaviorFactory.createBehavior(0);
 
 			assertEquals(RacingConstants.MOVE_UNIT_STOP, carMoveBehavior.getMoveDistance());  
 		}
