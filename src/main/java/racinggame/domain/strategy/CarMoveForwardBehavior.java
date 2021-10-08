@@ -1,6 +1,6 @@
 package racinggame.domain.strategy;
 
-import racinggame.domain.constants.RacingConstants;
+import racinggame.constants.RacingConstants;
 
 public class CarMoveForwardBehavior implements CarMoveBehavior {
 	@Override

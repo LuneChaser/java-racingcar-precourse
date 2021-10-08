@@ -9,6 +9,7 @@ import racinggame.domain.strategy.CarMoveForwardBehavior;
 import racinggame.domain.strategy.CarMoveStopBehavior;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mockStatic;
 
 import org.junit.jupiter.api.AfterEach;
@@ -69,56 +70,152 @@ public class ApplicationTest extends NSTest {
 		@Test
 		@DisplayName("생성오류-생성규칙(5이하) 위배")
 		void 생성오류_이름5자초과() {
+			RacingCarList cars = new RacingCarList();
+
+			assertEquals(false, cars.add("TestName"));
 		}
 
 		@Test
 		@DisplayName("생성오류-1개 생성시 자동차 이름 미입력")
 		void 생성오류_1개생성_이름미입력() {
+			RacingCarList cars = new RacingCarList();
+
+			assertEquals(false, cars.add(""));
 		}
 
 		@Test
 		@DisplayName("생성오류-다수 생성시 이름없는 항목존재")
 		void 생성오류_다수생성_이름미입력() {
+			RacingCarList cars = new RacingCarList();
+
+			assertEquals(false, cars.add(",test"));
 		}
 
 		@Test
 		@DisplayName("생성오류 발생시 이전에 생성된 항목의 유지여부 확인")
 		void 생성오류_이전생성된항목유지() {
+			RacingCarList cars = new RacingCarList();
+
+			cars.add("test");
+			
+			cars.add("TestName");
+			assertEquals(1, cars.size());
+			assertEquals("test", cars.getCarName(0));
+
+			cars.add("");
+			assertEquals(1, cars.size());
+			assertEquals("test", cars.getCarName(0));
+
+			cars.add(",chaser");
+			assertEquals(1, cars.size());
+			assertEquals("test", cars.getCarName(0));
 		}
 
 		@Test
 		@DisplayName("자동차를 1개만 생성")
 		void 생성_1개() {
+			RacingCarList cars = new RacingCarList();
+
+			cars.add("test");
+
+			assertEquals(1, cars.size());
+			assertEquals("test", cars.getCarName(0));
 		}
 
 		@Test
 		@DisplayName("자동차 2개만 생성")
 		void 생성_2개() {
+			RacingCarList cars = new RacingCarList();
+			
+			cars.add("test,pobi");
+			
+			assertEquals(2, cars.size());
+			assertEquals("test", cars.getCarName(0));
+			assertEquals("pobi", cars.getCarName(1));
 		}
 
 		@Test
 		@DisplayName("정지로 1번만 이동")
 		void 이동거리누적_정지() {
+			try (final MockedStatic<Randoms> mockRandoms = mockStatic(Randoms.class)) {
+				mockRandoms.when(() -> Randoms.pickNumberInRange(anyInt(), anyInt()))
+							.thenReturn(1);
+				RacingCarList cars = new RacingCarList();
+				
+				cars.add("test");
+
+				cars.allCarMove();
+
+				assertEquals(0, cars.getCarMoveDistance(0));
+			}
 		}
 		
 		@Test
 		@DisplayName("전진로 1번만 이동")
 		void 이동거리누적_전진() {
+			try (final MockedStatic<Randoms> mockRandoms = mockStatic(Randoms.class)) {
+				mockRandoms.when(() -> Randoms.pickNumberInRange(anyInt(), anyInt()))
+							.thenReturn(6);
+				RacingCarList cars = new RacingCarList();
+				
+				cars.add("test");
+
+				cars.allCarMove();
+
+				assertEquals(1, cars.getCarMoveDistance(0));
+			}
 		}
 		
 		@Test
 		@DisplayName("연속하여 정지로 이동")
 		void 이동거리누적_정지_정지() {
+			try (final MockedStatic<Randoms> mockRandoms = mockStatic(Randoms.class)) {
+				mockRandoms.when(() -> Randoms.pickNumberInRange(anyInt(), anyInt()))
+							.thenReturn(1, 3);
+				RacingCarList cars = new RacingCarList();
+				
+				cars.add("test");
+
+				cars.allCarMove();
+				cars.allCarMove();
+
+				assertEquals(0, cars.getCarMoveDistance(0));
+			}
 		}
 
 		@Test
 		@DisplayName("연속하여 전진으로 이동")
 		void 이동거리누적_전진_전진() {
+			try (final MockedStatic<Randoms> mockRandoms = mockStatic(Randoms.class)) {
+				mockRandoms.when(() -> Randoms.pickNumberInRange(anyInt(), anyInt()))
+							.thenReturn(6, 8);
+				RacingCarList cars = new RacingCarList();
+				
+				cars.add("test");
+
+				cars.allCarMove();
+				cars.allCarMove();
+
+				assertEquals(2, cars.getCarMoveDistance(0));
+			}
 		}
 		
 		@Test
 		@DisplayName("정지와 전진을 복합해서 이동")
 		void 이동거리누적_전진_정지_전진() {
+			try (final MockedStatic<Randoms> mockRandoms = mockStatic(Randoms.class)) {
+				mockRandoms.when(() -> Randoms.pickNumberInRange(anyInt(), anyInt()))
+							.thenReturn(6, 2, 8);
+				RacingCarList cars = new RacingCarList();
+				
+				cars.add("test");
+
+				cars.allCarMove();
+				cars.allCarMove();
+				cars.allCarMove();
+
+				assertEquals(2, cars.getCarMoveDistance(0));
+			}
 		}
 	}
 
