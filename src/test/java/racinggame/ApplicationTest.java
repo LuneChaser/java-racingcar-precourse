@@ -2,7 +2,12 @@ package racinggame;
 
 import nextstep.test.NSTest;
 import nextstep.utils.Randoms;
+import racinggame.domain.constants.RacingConstants;
+import racinggame.domain.strategy.CarMoveBehavior;
+import racinggame.domain.strategy.CarMoveForwardBehavior;
+import racinggame.domain.strategy.CarMoveStopBehavior;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mockStatic;
 
 import org.junit.jupiter.api.AfterEach;
@@ -112,11 +117,17 @@ public class ApplicationTest extends NSTest {
 		@Test
 		@DisplayName("앞으로 움직임")
 		void 전진() {
+			CarMoveBehavior carMoveBehavior = new CarMoveForwardBehavior();
+
+			assertEquals(RacingConstants.MOVE_UNIT_FORWARD, carMoveBehavior.getMoveDistance());  
 		}
 
 		@Test
 		@DisplayName("움직이지 않음")
 		void 정지() {
+			CarMoveBehavior carMoveBehavior = new CarMoveStopBehavior();
+
+			assertEquals(RacingConstants.MOVE_UNIT_STOP, carMoveBehavior.getMoveDistance());  
 		}
 	}
 
