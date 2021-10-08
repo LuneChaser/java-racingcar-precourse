@@ -173,7 +173,7 @@ public class ApplicationTest extends NSTest {
 				
 				cars.add("test");
 
-				cars.allCarMove();
+				cars.allMove(1);
 
 				assertEquals(0, cars.getCarMoveDistance(0));
 			}
@@ -189,7 +189,7 @@ public class ApplicationTest extends NSTest {
 				
 				cars.add("test");
 
-				cars.allCarMove();
+				cars.allMove(1);
 
 				assertEquals(1, cars.getCarMoveDistance(0));
 			}
@@ -205,8 +205,7 @@ public class ApplicationTest extends NSTest {
 				
 				cars.add("test");
 
-				cars.allCarMove();
-				cars.allCarMove();
+				cars.allMove(2);
 
 				assertEquals(0, cars.getCarMoveDistance(0));
 			}
@@ -222,8 +221,7 @@ public class ApplicationTest extends NSTest {
 				
 				cars.add("test");
 
-				cars.allCarMove();
-				cars.allCarMove();
+				cars.allMove(2);
 
 				assertEquals(2, cars.getCarMoveDistance(0));
 			}
@@ -239,9 +237,7 @@ public class ApplicationTest extends NSTest {
 				
 				cars.add("test");
 
-				cars.allCarMove();
-				cars.allCarMove();
-				cars.allCarMove();
+				cars.allMove(3);
 
 				assertEquals(2, cars.getCarMoveDistance(0));
 			}
