@@ -50,6 +50,16 @@ public class ApplicationTest extends NSTest {
 	@DisplayName("시나리오에따른 인수테스트")
 	class 인수테스트 {
 		@Test
+		@DisplayName("자동차이름 오입력으로인한 에러발생")
+		void 입력오류_자동차생성() {
+		}
+
+		@Test
+		@DisplayName("시도회수 오입력으로인한 에러발생")
+		void 입력오류_시도회수() {
+		}
+
+		@Test
 		@DisplayName("유일한 우승자가 존재")
 		void 다수의자동차_우승자_1명() {
 			try (final MockedStatic<Randoms> mockRandoms = mockStatic(Randoms.class)) {
