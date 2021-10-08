@@ -9,8 +9,11 @@ import racinggame.domain.strategy.CarMoveForwardBehavior;
 import racinggame.domain.strategy.CarMoveStopBehavior;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mockStatic;
+
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,11 +55,15 @@ public class ApplicationTest extends NSTest {
 		@Test
 		@DisplayName("자동차이름 오입력으로인한 에러발생")
 		void 입력오류_자동차생성() {
+			runNoLineFound("test,chaser");
+			verify("[ERROR] 자동차 생성을 하지 못하였습니다. - 입력하신 자동차 이름을 확인해주세요.");
 		}
 
 		@Test
 		@DisplayName("시도회수 오입력으로인한 에러발생")
 		void 입력오류_시도회수() {
+			runNoLineFound("test1,test2", "0");
+			verify("[ERROR] 시도할 회수는 0이상입니다.");
 		}
 
 		@Test

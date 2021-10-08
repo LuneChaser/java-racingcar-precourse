@@ -14,14 +14,27 @@ public class RacingGame {
 	}
 
 	public void run() {
-		System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
-		cars.add(Console.readLine());
+		while (cars.size() < 1) {
+			System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
+			cars.add(Console.readLine());
 
-		System.out.println("시도할 회수는 몇회인가요?");
-		Integer racingCount = Integer.valueOf(Console.readLine());
+			if (cars.size() < 1) {
+				System.out.println("[ERROR] 자동차 생성을 하지 못하였습니다. - 입력하신 자동차 이름을 확인해주세요.");
+			}
+		}
 
-		for (Integer index = 0; index < racingCount; index++) {
-			cars.allCarMove();
+		Integer racingCount = 0;
+		while (racingCount < 1) {
+			System.out.println("시도할 회수는 몇회인가요?");
+			racingCount = Integer.valueOf(Console.readLine());
+
+			if (racingCount < 1) {
+				System.out.println("[ERROR] 시도할 회수는 0이상입니다.");
+			}
+
+			for (Integer index = 0; index < racingCount; index++) {
+				cars.allCarMove();
+			}
 		}
 
 		printRacingResult(cars);
