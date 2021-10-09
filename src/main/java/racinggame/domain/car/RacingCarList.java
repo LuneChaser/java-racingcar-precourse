@@ -2,35 +2,64 @@ package racinggame.domain.car;
 
 import java.util.ArrayList;
 
-import nextstep.utils.Randoms;
 import racinggame.constants.RacingConstants;
 import racinggame.domain.strategy.CarMoveBehaviorFactory;
+import racinggame.util.RacingGameRandomNumber;
 
 public class RacingCarList {
-	private ArrayList<RacingCar> cars;
+	private final ArrayList<RacingCar> cars;
 
 	public RacingCarList() {
 		cars = new ArrayList<RacingCar>();
 	}
 
-	public boolean add(String carNames) {
-		ArrayList<RacingCar> tempCars = new ArrayList<RacingCar>();
-
-		for (String carName : carNames.split(RacingConstants.CAR_NAME_SEPERATOR)) {
-			if (isInvalidCarName(carName.trim())) {
-				return false;
-			}
-
-			tempCars.add(new RacingCar(carName.trim()));
+	public boolean add(String carName) {
+		if (isInvalidCarName(carName)) {
+			return false;
 		}
 
-		cars.addAll(tempCars);
+		this.addCarAll(generateCars(carName));
 
 		return true;
 	}
 
 	private boolean isInvalidCarName(String carName) {
+		boolean isInvalid = false;
+
+		for (String carNameItem : carName.split(RacingConstants.CAR_NAME_SEPERATOR)) {
+			isInvalid |= checkInvalidCarNameCondition(carNameItem.trim());
+		}
+
+		return isInvalid;
+	}
+
+	private boolean checkInvalidCarNameCondition(String carName) {
 		return carName.length() > RacingConstants.CAR_NAME_LIMIT || carName.length() < 1;
+	}
+
+	public void addCarAll(RacingCarList carList) {
+		for (Integer carIndex = 0; carIndex < carList.size(); carIndex++) {
+			this.addCar(carList.get(carIndex));
+		}
+	}
+
+	public RacingCar get(Integer carIndex) {
+		return cars.get(carIndex);
+	}
+
+	private RacingCarList addCar(RacingCar car) {
+		this.cars.add(car);
+		return this;
+	}
+
+	private RacingCarList generateCars(String carName) {
+		RacingCarList tempCars = new RacingCarList();
+
+		for (String carNameItem : carName.split(RacingConstants.CAR_NAME_SEPERATOR)) {
+			tempCars.addCar(new RacingCar(carNameItem.trim()));
+		}
+
+		return tempCars;
 	}
 
 	public Integer size() {
@@ -43,9 +72,7 @@ public class RacingCarList {
 
 	public void allMove() {
 		for (RacingCar car : cars) {
-			Integer moveBehaviorNumber = Randoms.pickNumberInRange(CarMoveBehaviorFactory.RANGE_MIN, CarMoveBehaviorFactory.RANGE_MAX);
-
-			car.move(CarMoveBehaviorFactory.createBehavior(moveBehaviorNumber));
+			car.move(CarMoveBehaviorFactory.createBehavior(RacingGameRandomNumber.gererate()));
 		}
 	}
 
