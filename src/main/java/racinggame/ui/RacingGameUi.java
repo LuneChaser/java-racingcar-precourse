@@ -32,27 +32,47 @@ public class RacingGameUi {
 	}
 
 	public static Integer getRacingCount() {
-		Integer racingCount = Integer.MIN_VALUE;
+		String tempRacingCount = "";
 
-		while (isInvalidRacingCount(racingCount)) {
+		do {
 			System.out.println("시도할 회수는 몇회인가요?");
+			tempRacingCount = Console.readLine();
+		} while (isInvalidRacingCount(tempRacingCount));
 
-			racingCount = Integer.valueOf(Console.readLine());
+		return Integer.valueOf(tempRacingCount);
+	}
 
-			printInvalidRacingCount(racingCount);
+	private static boolean isInvalidRacingCount(String racingCountString) {
+		if (racingCountString.isBlank()) {
+			System.out.println("[ERROR] 시도할 회수을 입력해주세요.");
+			return true;
 		}
 
-		return racingCount;
-	}
+		if (!isNumeric(racingCountString)) {
+			System.out.println("[ERROR] 시도할 회수는 숫자로만 입력되어야합니다.");
+			return true;
+		}
 
-	private static boolean isInvalidRacingCount(Integer racingCount) {
-		return racingCount < 1;
-	}
-
-	private static void printInvalidRacingCount(Integer racingCount) {
-		if (isInvalidRacingCount(racingCount)) {
+		if (!isRacingCountOverZero(Integer.valueOf(racingCountString))) {
 			System.out.println("[ERROR] 시도할 회수는 0이상입니다.");
+			return true;
 		}
+
+		return false;
+	}
+
+	private static boolean isNumeric(String str) {
+		try {
+			Double.parseDouble(str);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static boolean isRacingCountOverZero(Integer racingCount) {
+		return racingCount > 0;
 	}
 
 	public static void printRacingResult(RacingCarList cars) {

@@ -56,10 +56,31 @@ public class ApplicationTest extends NSTest {
 		}
 
 		@Test
-		@DisplayName("시도회수 오입력으로인한 에러발생")
-		void 입력오류_시도회수() {
+		@DisplayName("자동차이름 미입력으로인한 에러발생")
+		void 입력오류_자동차생성_미입력() {
+			runNoLineFound("\r\n");
+			verify("[ERROR] 자동차 생성을 하지 못하였습니다. - 입력하신 자동차 이름을 확인해주세요.");
+		}
+
+		@Test
+		@DisplayName("시도회수을 0으로입력시 에러발생")
+		void 입력오류_시도회수_0입력() {
 			runNoLineFound("test1,test2", "0");
 			verify("[ERROR] 시도할 회수는 0이상입니다.");
+		}
+
+		@Test
+		@DisplayName("시도회수을 숫자이외값으로 입력시 에러발생")
+		void 입력오류_시도회수_숫자이외입력() {
+			runNoLineFound("test1,test2", "a");
+			verify("[ERROR] 시도할 회수는 숫자로만 입력되어야합니다.");
+		}
+
+		@Test
+		@DisplayName("시도회수을 입력하지 않을시 에러발생")
+		void 입력오류_시도회수_미입력() {
+			runNoLineFound("test1,test2", "\r\n");
+			verify("[ERROR] 시도할 회수을 입력해주세요.");
 		}
 
 		@Test
