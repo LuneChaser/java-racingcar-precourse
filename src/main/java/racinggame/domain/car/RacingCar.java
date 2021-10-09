@@ -3,26 +3,23 @@ package racinggame.domain.car;
 import racinggame.domain.strategy.CarMoveBehavior;
 
 public class RacingCar {
-	String carName;
-	Integer totalMoveCount = 0;
+	private String name;
+	private Integer moveDistance;
 
-	public RacingCar(String carName) {
-		this.carName = carName;
+	public RacingCar(String name) {
+		this.name = name;
+		this.moveDistance = 0;
 	}
 
 	public void move(CarMoveBehavior moveBehavior) {
-		totalMoveCount += moveBehavior.getMoveDistance();
+		this.moveDistance += moveBehavior.getMoveDistance();
 	}
 
 	public Integer getMoveDistance() {
-		return this.totalMoveCount;
+		return this.moveDistance;
 	}
 
 	public String getName() {
-		return carName;
-	}
-
-	public Integer getTotalMoveCount() {
-		return totalMoveCount;
+		return this.name;
 	}
 }

@@ -32,7 +32,7 @@ public class RacingGameUi {
 	}
 
 	public static Integer getRacingCount() {
-		Integer racingCount = -1;
+		Integer racingCount = Integer.MIN_VALUE;
 
 		while (isInvalidRacingCount(racingCount)) {
 			System.out.println("시도할 회수는 몇회인가요?");

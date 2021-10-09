@@ -19,6 +19,7 @@ public class RacingGame {
 
 		for (Integer index = 0; index < racingCount; index++) {
 			racingCars.allMove();
+
 			RacingGameUi.printRacingResult(racingCars);
 		}
 
@@ -32,7 +33,7 @@ public class RacingGame {
 	}
 
 	public Integer getMaxMoveDistance(RacingCarList cars) {
-		Integer maxDistance = -1;
+		Integer maxDistance = Integer.MIN_VALUE;
 
 		for (Integer carIndex = 0; carIndex < cars.size(); carIndex++) {
 			maxDistance = Math.max(maxDistance, cars.getCarMoveDistance(carIndex));

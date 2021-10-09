@@ -7,7 +7,7 @@ import racinggame.constants.RacingConstants;
 import racinggame.domain.strategy.CarMoveBehaviorFactory;
 
 public class RacingCarList {
-	ArrayList<RacingCar> cars;
+	private ArrayList<RacingCar> cars;
 
 	public RacingCarList() {
 		cars = new ArrayList<RacingCar>();
@@ -38,12 +38,12 @@ public class RacingCarList {
 	}
 
 	public String getName(int carIndex) {
-		return cars.get(carIndex).carName;
+		return cars.get(carIndex).getName();
 	}
 
 	public void allMove() {
 		for (RacingCar car : cars) {
-			Integer moveBehaviorNumber = Randoms.pickNumberInRange(CarMoveBehaviorFactory.CAR_MOVE_BEHAVIOR_MIN, CarMoveBehaviorFactory.CAR_MOVE_BEHAVIOR_MAX);
+			Integer moveBehaviorNumber = Randoms.pickNumberInRange(CarMoveBehaviorFactory.RANGE_MIN, CarMoveBehaviorFactory.RANGE_MAX);
 
 			car.move(CarMoveBehaviorFactory.createBehavior(moveBehaviorNumber));
 		}
