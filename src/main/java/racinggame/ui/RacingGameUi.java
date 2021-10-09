@@ -56,13 +56,16 @@ public class RacingGameUi {
 	}
 
 	public static void printRacingResult(RacingCarList cars) {
-		System.out.println("");
-		System.out.println("실행 결과");
-
 		for (Integer carIndex = 0; carIndex < cars.size(); carIndex++) {
 			printMoveDistanceForCar(cars.getName(carIndex), cars.getCarMoveDistance(carIndex));
 		}
+
 		System.out.println("");
+	}
+
+	public static void printRacingResultTitle() {
+		System.out.println("");
+		System.out.println("실행 결과");
 	}
 
 	private static void printMoveDistanceForCar(String carName, Integer moveDistance) {

@@ -15,11 +15,12 @@ public class RacingGame {
 
 		Integer racingCount = RacingGameUi.getRacingCount();
 
+		RacingGameUi.printRacingResultTitle();
+
 		for (Integer index = 0; index < racingCount; index++) {
 			racingCars.allMove();
+			RacingGameUi.printRacingResult(racingCars);
 		}
-
-		RacingGameUi.printRacingResult(racingCars);
 
 		RacingGameUi.printRacingWinner(getWinners(racingCars));
 	}
